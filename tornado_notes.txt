@@ -1,0 +1,40 @@
+
+Tornado应用
+一. 获取tornado.web.Application对象
+    1. 参数handlers=[(访问路由, 执行方法),]
+    2. 监听端口：Application对象.listen(端口)
+
+二. 执行方法类： 需继承tornado.web.RequestHandler
+    1. 如果处理get请求，则定义def get(self)方法
+    2. 如果处理POST请求，则定义def post(self)方法
+
+三. Tornado的POST, GET两种请求方式的区别:
+    1.接收get请求， 获取URL中的参数：
+        1). self.get_argument(name)/self.get_arguments(name)
+        2). self.get_query_argument(name)/self.get_query_arguments(name)
+    2.接收post请求， 获取body中的参数：
+        1). self.get_argument(name)/self.get_arguments(name)
+        2). elf.get_body_argument(name)/self.get_body_arguments(name)
+
+四. 启动
+    1. tornado.ioioop.IOLoop.current().start()
+
+五. 命令行
+    1. 定义默认的监听端口：define('port', default=8080, type=int)
+    2. 解析命令行中的参数：parse_command_line()
+    3. 获取命令航中的port参数：options.port
+    4. 启动命令： python xxx.py --port=端口值
+
+六. 设置响应状态码,设置cookie,
+    1. 设置响应状态码
+        self.set_status(200)
+    2. 设置cookie, 其中的expire参数表示过期时间， 到了过期时间，自动删除
+        self.set_cookie('token', '123456', expires_days=1)
+        out_time = datetime.now() + timedelta(days=1)
+        self.set_cookie('token123', 'efreeere', expires=out_time)
+
+    3. 删除cookie中的token键值对
+        self.clear_cookie('token')
+        self.clear_all_cookies()
+    4. 跳转页面
+        self.redirect('/')
